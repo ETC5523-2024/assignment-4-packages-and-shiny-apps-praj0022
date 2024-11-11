@@ -1,0 +1,50 @@
+---
+title: "Using coping methods data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{copingmethods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(copingmethods)
+```
+
+A demonstration of the coping methods data contained in the `copingmethods` package. 
+
+```{r, fig.width=14, fig.height=12, out.width="100%"}
+library(ggplot2)
+library(tidyverse)
+
+# `topfive` 
+topfive <- percent_copingmethods |> 
+     arrange(desc(`Religious spiritual activities`)) |> 
+     head()
+
+# Create the plot
+ggplot(topfive, aes(x = reorder(Entity, `Religious spiritual activities`), y  = `Religious spiritual activities`, color = `Religious spiritual activities`)) +
+  geom_segment(aes(y = 0, yend = `Religious spiritual activities`, x = Entity, yend = Entity), 
+               linewidth = 3) +                           # Line from y-axis to point
+  geom_point(size = 6) +                                  # Point at the end of each line
+  geom_text(aes(label = paste0(round(`Religious spiritual activities`, 2), "%")), 
+            hjust = -0.3, size = 4.8) +                   # Percentage label rounded to 2 decimal places
+  scale_color_gradient(low = "lightblue", high = "darkblue") +  # Gradient from light to dark blue
+  labs(y = "Religious Spiritual Activities (%)", x = "Entity", title = "Top 5 Entities by Religious/Spiritual Activities") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 24 ),     # Center and resize title
+    axis.title.y = element_text(size = 22),                # Adjust x-axis label size
+    axis.title.x = element_text(size = 22),                # Adjust y-axis label size
+    axis.text.y = element_text(size = 20),                  # Adjust x-axis text size
+    axis.text.x = element_text(size = 20)                   # Adjust y-axis text size
+  )
+```
+

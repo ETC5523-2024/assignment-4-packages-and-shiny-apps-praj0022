@@ -5,6 +5,8 @@
 #' @return No return value. This function is called for its side effects (launching the Shiny app).
 #' @export
 #'
+#' @importFrom shiny  runApp
+#'
 #' @examples
 #' \dontrun{
 #'   launch_shiny_app()
@@ -14,5 +16,5 @@ launch_copingmethods <- function() {
   if (app_dir == "") {
     stop("Could not find the Shiny app directory. Try re-installing `copingmethods`.", call. = FALSE)
   }
-  shiny::runApp(app_dir, display.mode = "normal")
+      runApp(app_dir, display.mode = "normal")
 }
