@@ -1,0 +1,20 @@
+#' Percentage of Coping Methods Used for Anxiety and Depression by Country, 2020
+#'
+#' @format ## 'percent_copingmethods'
+#' A data frame with 113 rows and 11 columns
+#' \describe{
+#'    \item{Entity}{Name of Country}
+#'    \item{Code}{County Code}
+#'    \item{Year}{Year of Data Collection}
+#'    \item{Religious spiritual activities}{Percentage of respondents in each demographic group (country, age, gender) who engaged in religious or spiritual activities}
+#'    \item{Improved healthy lifestyle behaviors}{Percentage of respondents in each demographic group (country, age, gender) who improved healthy lifestyle behaviors}
+#'    \item{Made a change to work situation}{Percentage of respondents in each demographic group (country, age, gender) who made a change to work situation}
+#'    \item{Made a change to personal relationships}{Percentage of respondents in each demographic group (country, age, gender) who made a change to personal relationships}
+#'    \item{Talked to friends or family}{Percentage of respondents in each demographic group (country, age, gender) who spoke to friends or family}
+#'    \item{Took prescribed medication}{Percentage of respondents in each demographic group (country, age, gender) who took prescribed medication}
+#'    \item{Spent time in nature }{Percentage of respondents in each demographic group (country, age, gender) who spent time in nature}
+#'    \item{Talked to mental health professional}{Percentage of respondents in each demographic group (country, age, gender) who spoke with a mental health professional}
+#'
+#'  }
+#'  @source <https://ourworldindata.org/grapher/dealing-with-anxiety-depression-comparison?tab=table>
+"percent_copingmethods"
