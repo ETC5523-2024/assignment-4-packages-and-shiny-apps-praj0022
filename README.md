@@ -66,7 +66,7 @@ head(depression_age)
 head(percent_copingmethods)
 ```
 
-# Launch the Interactive Shiny App
+## Launch the Interactive Shiny App
 
 To launch the interactive Shiny app, use the following command:
 
@@ -116,9 +116,6 @@ library(dplyr)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
-```
-
-``` r
 library(tidyr)
 
 
@@ -144,7 +141,7 @@ ggplot(filtered_data, aes(x = Entity, y = Value, fill = Coping_Method)) +
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-# Where to Find and Install It
+## Where to Find and Install It
 
 The copingmethods package is hosted on GitHub. You can install it using
 the remotes package as shown above.
