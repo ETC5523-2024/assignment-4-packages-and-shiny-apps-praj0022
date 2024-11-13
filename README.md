@@ -163,5 +163,5 @@ remotes::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-praj0
 ```
 
 For detailed documentation, examples, and usage guidelines, please refer
-to the pkgdown site (replace YourUsername with your GitHub username) or
-the package vignettes.
+to the pkgdown site:
+<https://etc5523-2024.github.io/assignment-4-packages-and-shiny-apps-praj0022/>
