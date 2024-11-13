@@ -22,8 +22,10 @@ A data frame with 113 rows and 11 columns
 \item{Talked to mental health professional}{Percentage of respondents in each demographic group (country, age, gender) who spoke with a mental health professional}
 
 }
-@source \url{https://ourworldindata.org/grapher/dealing-with-anxiety-depression-comparison?tab=table}
 }
+}
+\source{
+\url{https://ourworldindata.org/grapher/dealing-with-anxiety-depression-comparison?tab=table}
 }
 \usage{
 percent_copingmethods

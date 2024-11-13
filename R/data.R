@@ -16,7 +16,7 @@
 #'    \item{Talked to mental health professional}{Percentage of respondents in each demographic group (country, age, gender) who spoke with a mental health professional}
 #'
 #'  }
-#'  @source <https://ourworldindata.org/grapher/dealing-with-anxiety-depression-comparison?tab=table>
+#' @source <https://ourworldindata.org/grapher/dealing-with-anxiety-depression-comparison?tab=table>
 "percent_copingmethods"
 
 
