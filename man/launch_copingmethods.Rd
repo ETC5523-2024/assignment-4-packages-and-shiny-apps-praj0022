@@ -12,8 +12,3 @@ No return value. This function is called for its side effects (launching the Shi
 \description{
 This function launches the Shiny app named copingmethods_app included in the copingmethods package.
 }
-\examples{
-\dontrun{
-  launch_shiny_app()
-}
-}

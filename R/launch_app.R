@@ -7,10 +7,7 @@
 #'
 #' @importFrom shiny  runApp
 #'
-#' @examples
-#' \dontrun{
-#'   launch_shiny_app()
-#' }
+#'
 launch_copingmethods <- function() {
   app_dir <- system.file("copingmethods_app", package = "copingmethods")
   if (app_dir == "") {

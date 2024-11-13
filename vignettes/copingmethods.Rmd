@@ -1,5 +1,5 @@
 ---
-title: "Using coping methods data"
+title: "copingmethods "
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{copingmethods}
@@ -23,11 +23,15 @@ The copingmethods package provides tools to explore mental health data focusing 
 # Installation
 
 To get started, make sure the package is installed and loaded in your R environment:
+  
+### Install the package if it's not already installed
+ 
+```{r}
+remotes::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-praj0022")
+```
 
-#### Install the package if it's not already installed
-# install.packages("copingmethods")
+### Load the package
 
-#### Load the package
 ```{r setup}
 library(copingmethods)
 ```
@@ -35,80 +39,78 @@ library(copingmethods)
 # Datasets Included in the Package
 
 The copingmethods package includes two datasets:
-
+  
 **depression_age**: This dataset provides annual data on depression rates for different age groups across countries, from 1990 to 2019. It allows for an analysis of trends in age-specific depression rates over time.
 
 **percent_copingmethods**: This dataset contains information on the percentage usage of various coping methods reported by individuals across countries, specifically for the year 2020. This data is useful for comparing how different countries approach mental health management.
 Example: Loading and Exploring the Datasets
 You can preview the structure of these datasets as follows:
-
-#### View the first few rows of the depression_age dataset
-
+  
+### View the first few rows of the depression_age dataset
+  
 ```{r}
-head(depression_age)
+head(depression_age, 2)
 ```
 
-#### View the first few rows of the percent_copingmethods dataset
+### View the first few rows of the percent_copingmethods dataset
 
 ```{r}
-head(percent_copingmethods)
+head(percent_copingmethods, 2)
 ```
 
 
-# _depression_age_ Dataset Structure
+### _depression_age_ Dataset Structure
 
 The depression_age dataset includes the following columns:
-
-_Entity_: The country or region where the data was collected.
-_Code_: Country Code.
-_Year_: The year the data was collected.
-_Age Groups (e.g., Age_5_14, Age_15_19, etc.)_: The percentage of people in each age group who reported experiencing depression.
+  
+- _Entity_: The country or region where the data was collected.
+- _Code_: Country Code.
+- _Year_: The year the data was collected.
+- _Age Groups (e.g., Age_5_14, Age_15_19, etc.)_: The percentage of people in each age group who reported experiencing depression.
 
 Each row represents the depression percentages for various age groups in a given country and year.
 
-#### Example Usage
+### Example Usage
 
 To see the depression rates for a specific country and year:
-
+  
 ```{r}
 # Filter for data from Andorra in 2019
 andorra_2019 <- depression_age |>
   filter(Entity == "Andorra", Year == "2019")
+
 print(andorra_2019)
 ```
 
-
-
-# _percent_copingmethods_ Dataset Structure
+### _percent_copingmethods_ Dataset Structure
 
 The percent_copingmethods dataset contains the following columns:
-
-_Entity_: The country or region where the data was collected.
-_Code_: Country code.
-_Year_: The year of data collection (2020).
-_Coping Method Columns (e.g., Religious spiritual activities, Improved healthy lifestyle behaviors, etc.)_: The percentage of respondents who reported using each coping method.
+  
+- _Entity_: The country or region where the data was collected.
+- _Code_: Country code.
+- _Year_: The year of data collection (2020).
+- _Coping Method Columns (e.g., Religious spiritual activities, Improved healthy lifestyle behaviors, etc.)_: The percentage of respondents who reported using each coping method.
 
 Each row represents the percentage usage of different coping methods in a given country.
 
-#### Example Usage
+### Example Usage
 
 To see the top coping methods used in a specific country, such as Brazil:
-
+  
 ```{r}
 # Filter for Brazil in 2020
 brazil_coping <- percent_copingmethods |>
   filter(Entity == "Brazil")
+
 print(brazil_coping)
 ```
 
-
-#### Visualizing Top Coping Methods Using ggplot2
+### Visualizing Top Coping Methods Using ggplot2
 
 As an example, let's create a plot that shows the top five entities based on their use of "Religious spiritual activities" as a coping method.
 
 ```{r, fig.width=14, fig.height=12, out.width="100%", cache=TRUE}
 library(ggplot2)
-library(tidyverse)
 
 # `topfive` 
 topfive <- percent_copingmethods |> 
@@ -116,14 +118,21 @@ topfive <- percent_copingmethods |>
      head()
 
 # Create the plot
-ggplot(topfive, aes(x = reorder(Entity, `Religious spiritual activities`), y  = `Religious spiritual activities`, color = `Religious spiritual activities`)) +
-  geom_segment(aes(y = 0, yend = `Religious spiritual activities`, x = Entity, yend = Entity), 
-               linewidth = 3) +                           # Line from y-axis to point
-  geom_point(size = 6) +                                  # Point at the end of each line
+ggplot(topfive, aes(x = reorder(Entity, `Religious spiritual activities`), 
+                    y  = `Religious spiritual activities`, 
+                    color = `Religious spiritual activities`)) +
+  geom_segment(aes(y = 0, 
+                   yend = `Religious spiritual activities`,
+                   x = Entity, 
+                   yend = Entity), 
+               linewidth = 3) +          # Line from y-axis to point
+  geom_point(size = 6) +                # Point at the end of each line
   geom_text(aes(label = paste0(round(`Religious spiritual activities`, 2), "%")), 
-            hjust = -0.3, size = 4.8) +                   # Percentage label rounded to 2 decimal places
+            hjust = -0.3, size = 4.8) +                   
   scale_color_gradient(low = "lightblue", high = "darkblue") +  # Gradient from light to dark blue
-  labs(y = "Religious Spiritual Activities (%)", x = "Entity", title = "Top 5 Entities by Religious/Spiritual Activities") +
+  labs(y = "Religious Spiritual Activities (%)", 
+       x = "Entity", 
+       title = "Top 5 Entities by Religious/Spiritual Activities") +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, size = 24 ),     # Center and resize title
@@ -133,8 +142,6 @@ ggplot(topfive, aes(x = reorder(Entity, `Religious spiritual activities`), y  = 
     axis.text.x = element_text(size = 20)                   # Adjust y-axis text size
   )
 
-
-
 ```
 
 This plot shows the top five entities that reported the highest percentages for "Religious spiritual activities" as a coping mechanism. Each bar represents an entity, with a gradient color indicating the level of usage.
@@ -143,17 +150,17 @@ This plot shows the top five entities that reported the highest percentages for 
 
 The copingmethods package provides an interactive Shiny application to help users explore mental health trends. The app can be launched using the launch_copingmethods() function, which opens a user-friendly interface to visualize and compare data.
 
-Function Description: launch_copingmethods()
-launch_copingmethods()
+**Function Description**: launch_copingmethods()
+
 The launch_copingmethods() function starts the Shiny app included in the package. The app provides interactive visualizations of mental health trends, allowing users to analyze depression rates across age groups and compare coping methods used by different countries.
 
-Arguments: This function takes no arguments.
+**Arguments**: This function takes no arguments.
 
-Return Value: The function does not return a value but instead launches the Shiny app in your default web browser.
+**Return Value**: The function does not return a value but instead launches the Shiny app in your default web browser.
 
 Example Usage:
 
-```{r}
+```r
 # Launch the Shiny app to explore the datasets interactively
 launch_copingmethods()
 ```
@@ -209,7 +216,8 @@ _"Could not find the Shiny app directory. Try re-installing copingmethods."_
 Ensure the copingmethods package is correctly installed. Try reinstalling the package if necessary:
 
 **Reinstall copingmethods package**
-```{r}
+
+```r
 # Reinstall copingmethods package
 remotes::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-praj0022")
 
@@ -225,7 +233,7 @@ Problem: You may encounter errors related to `depression_age` or `percent_coping
 
 Ensure that the datasets are loaded correctly from the package. The datasets should be accessed directly from the copingmethods package namespace:
 
-```{r}
+```r
 library(copingmethods)
 data("depression_age", package = "copingmethods")
 data("percent_copingmethods", package = "copingmethods")
@@ -251,7 +259,7 @@ Try clearing your browser cache or opening the app in a different browser. Occas
 
 If layout issues persist, try running `runApp()` in RStudio with a clean session:
 
-```{r}
+```r
 library(copingmethods)
 launch_copingmethods()
 ```
@@ -266,7 +274,7 @@ Problem: Errors related to visualizations, such as "object not found" or unexpec
 
 Double-check that the necessary libraries (ggplot2, plotly, etc.) are loaded. If the problem is specific to the Shiny app, ensure that the latest versions of these libraries are installed.
 
-```{r}
+```r
 install.packages("ggplot2")
 install.packages("plotly")
 ```
@@ -282,14 +290,15 @@ Problem: Theme issues, such as font not displaying or color themes not applying 
 
 Make sure `bslib` is installed and updated. You can install or update it using:
 
-```{r}
+```r
 install.packages("bslib")
 ```
 
-
 If the theme still does not apply correctly, try adjusting theme settings in your code and ensuring the required fonts are available. Some fonts may require an active internet connection to load correctly.
-
 
 If you continue to experience issues after trying these solutions, consult the documentation for shiny, ggplot2, or other relevant packages, or seek help from the R community on forums like Stack Overflow or RStudio Community.
 
+# Overview
+
 This guide provides an overview of the functionalities in the `copingmethods` package, including dataset exploration, plotting examples, and an interactive Shiny app for comprehensive mental health data analysis. Users can visualize and compare coping methods and depression trends across various age groups and countries, making it a valuable tool for exploring global mental health trends. Additionally, a troubleshooting section is included to address common installation, loading, and visualization issues, ensuring a smooth experience while using the package. 
+

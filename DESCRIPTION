@@ -1,11 +1,10 @@
 Package: copingmethods
-Title: Data for global approaches to anxiety and depression 2020
-Version: 0.0.0.9000
+Title: Tools to Explore Global Mental Health Trends in Depression and Coping Mechanisms
+Version: 1.0.0
 Authors@R: 
     person("Pooja", "Rajendran Raju", , "praj0022@student.monash.edu", role = c("aut", "cre"))
-Description: This package provides comprehensive data to facilitate comparisons of how different countries address anxiety and depression. It includes variables capturing various mental health support measures and coping methods across regions, enabling analyses of global trends and cross-country differences in handling mental health challenges.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: The `copingmethods` package offers tools to explore mental health data, focusing on depression rates across age groups and coping mechanisms used by different countries. This package includes two datasets, `depression_age` (depression rates from 1990 to 2019 by age group) and `percent_copingmethods` (coping methods data for 2020). An interactive Shiny app allows users to analyze these trends interactively.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -13,8 +12,16 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Imports: 
-    ggplot2 (>= 3.4.1)
+    bslib,
+    dplyr,
+    ggplot2 (>= 3.4.1),
+    plotly,
+    remotes,
+    shiny,
+    tidyr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat,
+    pkgdown
 VignetteBuilder: knitr

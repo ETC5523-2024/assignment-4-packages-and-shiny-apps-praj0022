@@ -16,14 +16,14 @@ library(plotly)
 library(bslib)
 library(copingmethods)
 # Load data from the package
-depression_data <- copingmethods::depression_age  # Assuming the dataset is named depression_age
-coping_data <- copingmethods::percent_copingmethods  # Assuming the dataset is named percent_copingmethods
+depression_data <- copingmethods::depression_age
+coping_data <- copingmethods::percent_copingmethods
 
 # Data preparation for `depression_data`
-depression_data <- depression_data %>%
+depression_data <- depression_data |>
   pivot_longer(cols = starts_with("Age_"),
                names_to = "AgeGroup",
-               values_to = "Percentage") %>%
+               values_to = "Percentage") |>
   mutate(AgeGroup = gsub("Age_", "", AgeGroup))  # Remove "Age_" prefix for cleaner labels
 
 # Define a custom order for the AgeGroup factor
@@ -145,19 +145,19 @@ server <- function(input, output, session) {
   output$barChart <- renderPlotly({
     req(input$analysis_type == "depression")  # Ensure this only runs when "depression" is selected
 
-    filtered_data <- depression_data %>%
+    filtered_data <- depression_data |>
       filter(Year == input$years[2], Entity == input$entity)
 
     avg_percentage <- NULL
     if (input$show_avg) {
-      avg_percentage <- depression_data %>%
-        filter(Year == input$years[2]) %>%
-        summarize(Average = mean(Percentage, na.rm = TRUE)) %>%
+      avg_percentage <- depression_data |>
+        filter(Year == input$years[2]) |>
+        summarize(Average = mean(Percentage, na.rm = TRUE)) |>
         pull(Average)
     }
 
     p <- ggplot(filtered_data, aes(y = AgeGroup, x = Percentage, fill = Percentage)) +
-      geom_col(width = 0.7) +  # Set width to avoid auto-expansion
+      geom_col(width = 0.7) +
       scale_fill_gradient(high = "#1F4E79", low = "#D3E8FF") +
       labs(x = "Depression Percentage (%)", y = "Age Group",
            title = paste("Depression by Age in", input$entity, "for", input$years[2])) +
@@ -166,10 +166,10 @@ server <- function(input, output, session) {
 
     if (!is.null(avg_percentage)) {
       p <- p +
-        geom_vline(xintercept = avg_percentage, color = "yellow", linetype = "dashed", size = 1.2) +
+        geom_vline(xintercept = avg_percentage, color = "red", linetype = "dashed", size = 1.2) +
         geom_text(aes(x = avg_percentage - 0.92, y = length(levels(filtered_data$AgeGroup)) / 2,
                       label = paste("Average =", round(avg_percentage, 2), "%")),
-                  color = "yellow", vjust = -0.1, hjust = -0.1, size = 3.5)
+                  color = "red", vjust = -0.1, hjust = -0.1, size = 3.5)
     }
 
     ggplotly(p)
@@ -179,17 +179,17 @@ server <- function(input, output, session) {
   output$depressionTable <- renderTable({
     req(input$analysis_type == "depression")
 
-    start_data <- depression_data %>%
-      filter(Entity == input$entity, Year == input$years[1]) %>%
+    start_data <- depression_data |>
+      filter(Entity == input$entity, Year == input$years[1]) |>
       select(AgeGroup, StartPercentage = Percentage)
 
-    end_data <- depression_data %>%
-      filter(Entity == input$entity, Year == input$years[2]) %>%
+    end_data <- depression_data |>
+      filter(Entity == input$entity, Year == input$years[2]) |>
       select(AgeGroup, EndPercentage = Percentage)
 
-    difference_data <- start_data %>%
-      inner_join(end_data, by = "AgeGroup") %>%
-      mutate(Difference = EndPercentage - StartPercentage) %>%
+    difference_data <- start_data |>
+      inner_join(end_data, by = "AgeGroup") |>
+      mutate(Difference = EndPercentage - StartPercentage) |>
       select(AgeGroup, Difference)
 
     names(difference_data) <- c("Age Group", paste("Difference (%) from", input$years[1], "to", input$years[2]))
@@ -201,22 +201,22 @@ server <- function(input, output, session) {
     req(input$analysis_type == "coping")
 
     # Data preparation for the first country
-    country1_data <- coping_data %>%
-      filter(Entity == input$country1) %>%
-      select(-Entity, -Code, -Year) %>%
-      pivot_longer(cols = everything(), names_to = "CopingMethod", values_to = "Percentage") %>%
-      arrange(desc(Percentage)) %>%
-      head(input$top_n) %>%
+    country1_data <- coping_data |>
+      filter(Entity == input$country1) |>
+      select(-Entity, -Code, -Year) |>
+      pivot_longer(cols = everything(), names_to = "CopingMethod", values_to = "Percentage") |>
+      arrange(desc(Percentage)) |>
+      head(input$top_n) |>
       mutate(Country = input$country1)
 
     # Data preparation for the second country if selected
     if (input$country2 != "None") {
-      country2_data <- coping_data %>%
-        filter(Entity == input$country2) %>%
-        select(-Entity, -Code, -Year) %>%
-        pivot_longer(cols = everything(), names_to = "CopingMethod", values_to = "Percentage") %>%
-        arrange(desc(Percentage)) %>%
-        head(input$top_n) %>%
+      country2_data <- coping_data |>
+        filter(Entity == input$country2) |>
+        select(-Entity, -Code, -Year) |>
+        pivot_longer(cols = everything(), names_to = "CopingMethod", values_to = "Percentage") |>
+        arrange(desc(Percentage)) |>
+        head(input$top_n) |>
         mutate(Country = input$country2)
 
       # Combine data for both countries
